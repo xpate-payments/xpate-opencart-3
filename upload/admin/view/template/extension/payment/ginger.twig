@@ -1,0 +1,327 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-ginger" data-toggle="tooltip" title="{{ button_save }}"
+                        class="btn btn-primary"><i class="fa fa-save"></i>
+                </button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}"
+                   class="btn btn-default"><i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if info_message %}
+            <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ info_message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_ginger }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-ginger"
+                      class="form-horizontal">
+                    {% if ginger_module == 'ginger'%}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger-api-key">
+                            <span data-toggle="tooltip" title="{{ info_help_api_key }}">
+                                {{ entry_ginger_api_key }}
+                            </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_api_key" id="input-ginger-api-key"
+                                       value="{{ _context['payment_ginger_api_key'] }}" size="50" class="form-control"
+                                       placeholder="{{ info_help_api_key }}"/>
+                                {% if error_missing_api_key %}
+                                    <div class="text-danger">{{ error_missing_api_key }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if ginger_module == 'ginger_klarnapaylater' %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-klarnapaylater-test-api-key">
+								<span data-toggle="tooltip" title="{{ info_help_klarnapaylater_test_api_key }}">
+									{{ entry_klarnapaylater_test_api_key }}
+								</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_klarnapaylater_test_api_key" id="input-klarnapaylater-test-api-key"
+                                       value="{{ _context['payment_ginger_klarnapaylater_test_api_key'] }}" size="50" class="form-control"
+                                       placeholder="{{ info_help_klarnapaylater_test_api_key }}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-klarnapaylater-ip-filter">
+								<span data-toggle="tooltip" title="{{ info_help_klarnapaylater_ip_filter }}">
+									{{ entry_klarnapaylater_ip_filter }}
+								</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_klarnapaylater_ip_filter"
+                                       value="{{ _context['payment_ginger_klarnapaylater_ip_filter'] }}"
+                                       placeholder="{{ info_help_klarnapaylater_ip_filter }}"
+                                       id="input-klarnapaylater-ip-filter" class="form-control" />
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if ginger_module == 'ginger_afterpay' %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-ginger-afterpay-test-api-key">
+								<span data-toggle="tooltip" title="{{ info_help_afterpay_test_api_key }}">
+									{{ entry_afterpay_test_api_key }}
+								</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_afterpay_test_api_key" id="input-ginger-afterpay-test-api-key"
+                                       value="{{ _context['payment_ginger_afterpay_test_api_key'] }}" size="50" class="form-control"
+                                       placeholder="{{ info_help_afterpay_test_api_key }}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-afterpay-ip-filter">
+								<span data-toggle="tooltip" title="{{ info_help_afterpay_ip_filter }}">
+									{{ entry_afterpay_ip_filter }}
+								</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_afterpay_ip_filter"
+                                       value="{{ _context['payment_ginger_afterpay_ip_filter'] }}"
+                                       placeholder="{{ info_help_afterpay_ip_filter }}"
+                                       id="input-afterpay-ip-filter" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-country-access">{{ entry_country_access }}
+                                <span data-toggle="tooltip" title="{{ info_help_country_access }}">
+                                {{ entry_ginger_country_access }}
+                            </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_ginger_afterpay_country_access" id="input-country-access"
+                                       value="{{ _context['payment_ginger_afterpay_country_access'] }}"
+                                       placeholder="{{ info_example_country_access }}"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if ginger_module == 'ginger'%}
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_new">{{ entry_order_new }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_new" class="form-control"
+                                        id="input-ginger_order_status_id_new">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_new'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_processing">{{ entry_order_processing }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_processing" class="form-control"
+                                        id="input-ginger_order_status_id_processing">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_processing'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_completed">{{ entry_order_completed }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_completed" class="form-control"
+                                        id="input-ginger_order_status_id_completed">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_completed'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_expired">{{ entry_order_expired }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_expired" class="form-control"
+                                        id="input-ginger_order_status_id_expired">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_expired'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_cancelled">{{ entry_order_cancelled }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_cancelled" class="form-control"
+                                        id="input-ginger_order_status_id_cancelled">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_cancelled'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_error">{{ entry_order_error }}</label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_error" class="form-control"
+                                        id="input-ginger_order_status_id_error">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_error'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger_order_status_id_captured">{{ entry_order_captured }}
+                            </label>
+                            <div class="col-sm-10">
+                                <select name="payment_{{ ginger_module }}_order_status_id_captured" class="form-control"
+                                        id="input-ginger_order_status_id_captured">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == _context['payment_' ~ ginger_module ~ '_order_status_id_captured'] %}
+                                            <option value="{{ order_status.order_status_id }}"
+                                                    selected="selected">{{ order_status.name }}</option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-sort-order">{{ entry_sort_order }}
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_{{ ginger_module }}_sort_order"
+                                       value="{{ _context['payment_'~ginger_module~'_sort_order'] }}"
+                                       placeholder="{{ ginger_sort_order }}"
+                                       id="input-sort-order" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   for="input-ginger-total">
+                             <span data-toggle="tooltip" title="{{ info_help_total }}">
+                                   {{ entry_ginger_total }}
+                            </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="payment_{{ ginger_module }}_total"
+                                       value="{{ _context['payment_'~ginger_module~'_total'] }}"
+                                       placeholder="{{ info_help_total }}"
+                                       id="input-ginger-total" class="form-control"/>
+                            </div>
+                        </div>
+                    {% endif%}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="input-ginger-status">{{ entry_status }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="payment_{{ ginger_module }}_status" id="input-ginger-status" class="form-control">
+                                {% if _context['payment_'~ginger_module~'_status'] %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    {% if ginger_module == 'ginger'%}
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ entry_cacert }}</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="payment_{{ ginger_module }}_bundle_cacert" value="1"
+                                            {% if _context['payment_'~ginger_module~'_bundle_cacert'] %} checked="checked" {% endif %}  />
+                                    {{ text_yes }}
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="payment_{{ ginger_module }}_bundle_cacert" value="0"
+                                            {% if not _context['payment_'~ginger_module~'_bundle_cacert'] %} checked="checked" {% endif %}  />
+                                    {{ text_no }}
+                                </label>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}
