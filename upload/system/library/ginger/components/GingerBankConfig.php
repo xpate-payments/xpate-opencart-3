@@ -7,7 +7,7 @@ class GingerBankConfig
     const BANK_LABEL = "Xpate";
     const PLUGIN_NAME = "xpate-online-opencart-3";
 
-    const BANK_ENDPOINT = 'https://api.online.emspay.eu';
+    const BANK_ENDPOINT = 'https://api.gateway.xpate.com';
 
 
     public static function gingerPaymentNameMapping($paymentMethodName)
